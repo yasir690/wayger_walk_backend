@@ -1,6 +1,6 @@
 const prisma = require("../config/prismaConfig");
 const { hashPassword } = require("../utils/passwordHashed");
-const { userConstants } = require("../constants/constant");
+const { userConstants } = require("../constants/constants");
 
 const adminSeed = async () => {
   try {

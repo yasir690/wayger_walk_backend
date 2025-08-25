@@ -2,6 +2,7 @@ module.exports = {
   otpConstants: {
     REGISTER: "REGISTER",
     FORGETPASSWORD: "FORGETPASSWORD",
+    LOGIN:"LOGIN"
   },
   genderConstants: {
     MALE: "MALE",
