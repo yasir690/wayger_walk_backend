@@ -6,6 +6,13 @@ const { userNotificationReadSchema, userAllNotificationSchema } = require("../..
 const { verifyUserToken } = require("../../middleware/auth");
 
 
+// userNotificationRouter.post(
+//   "/createNotification",
+//   limiter,
+//   verifyUserToken,
+//   userNotificationController.createNotification
+// );
+
 
 userNotificationRouter.get(
   "/showAllNotification",

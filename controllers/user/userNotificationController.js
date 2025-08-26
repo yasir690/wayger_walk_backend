@@ -2,6 +2,25 @@ const prisma = require("../../config/prismaConfig");
 const { NotFoundError, ValidationError } = require("../../resHandler/CustomError");
 const { handlerOk } = require("../../resHandler/responseHandler");
 
+// const createNotification = async (req, res, next) => {
+//   try {
+//     const { title, description } = req.body;
+//     const { id } = req.user;
+
+//     const createnoti = await prisma.notification.create({
+//       data: {
+//         title,
+//         description,
+//         userId: id,
+//       }
+//     });
+
+//     handlerOk(res, 200, createnoti, 'notification create')
+//   } catch (error) {
+//     next(error)
+//   }
+// }
+
 const showAllNotification = async (req, res, next) => {
   try {
 
@@ -15,7 +34,7 @@ const showAllNotification = async (req, res, next) => {
       prisma.notification.findMany({
         where: { userId: id },
         orderBy: { createdAt: "desc" },
-        include: { user: { select: { firstName: true, image: true } } },
+        include: { user: { select: { userName: true, image: true } } },
         skip,
         take: limit,
       })
@@ -26,7 +45,7 @@ const showAllNotification = async (req, res, next) => {
     }
 
 
-    handlerOk(res, 200, notifications, 'notifications found successfully')
+    handlerOk(res, 200, ...notifications, 'notifications found successfully')
 
 
 
@@ -99,5 +118,6 @@ const onAndOffNotification = async (req, res, next) => {
 module.exports={
     showAllNotification,
     readNotification,
-    onAndOffNotification
+    onAndOffNotification,
+    // createNotification
 }

@@ -5,7 +5,7 @@ const validateRequest = require("../../middleware//validateRequest");
 const adminContentRouter = require("express").Router();
 const adminContentController = require("../../controllers/admin/adminContentController");
 const { verifyAdminToken } = require("../../middleware/auth");
-const { adminCreatePrivacyPolicySchema, adminUpdatePrivacyPolicySchema, adminCreateTermsConditionSchema, adminUpdateTermsConditionSchema,adminUpdateAboutAppSchema } = require("../../schema/admin/content");
+const { adminCreatePrivacyPolicySchema, adminUpdatePrivacyPolicySchema, adminCreateTermsConditionSchema, adminUpdateTermsConditionSchema,adminUpdateAboutAppSchema, adminCreateAboutAppSchema } = require("../../schema/admin/content");
 
 adminContentRouter.get("/showAllUsers",
   // limiter,
@@ -75,7 +75,7 @@ adminContentRouter.put("/updateTermsAndCondition/:termsId",
 adminContentRouter.post("/createAboutApp",
   limiter,
   verifyAdminToken,
-  validateRequest(adminCreateTermsConditionSchema),
+  validateRequest(adminCreateAboutAppSchema),
   adminContentController.createAboutApp
 );
 
@@ -85,11 +85,17 @@ adminContentRouter.get("/showAboutApp",
   adminContentController.showAboutApp
 );
 
-adminContentRouter.put("/updateAboutApp/:termsId",
+adminContentRouter.put("/updateAboutApp/:aboutAppId",
   limiter,
   verifyAdminToken,
   validateRequest(adminUpdateAboutAppSchema),
   adminContentController.updateAboutApp
+);
+
+adminContentRouter.get("/showAllUsersFeedBack",
+  limiter,
+  verifyAdminToken,
+  adminContentController.showAllUsersFeedBack
 );
 
 

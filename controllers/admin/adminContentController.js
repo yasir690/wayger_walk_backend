@@ -260,30 +260,30 @@ const updateTermsAndCondition = async (req, res, next) => {
 const createAboutApp = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const { termscondition } = req.body;
+    const { aboutapp } = req.body;
 
-    const findterms = await prisma.termsCondition.findFirst({
+    const findaboutapp = await prisma.AboutApp.findFirst({
       where: {
         createdById: id
       }
     });
 
-    if (findterms) {
-      throw new ConflictError("terms and condition create once only");
+    if (findaboutapp) {
+      throw new ConflictError("about app create once only");
     }
 
-    const createterms = await prisma.termsCondition.create({
+    const createaboutapp = await prisma.AboutApp.create({
       data: {
         createdById: id,
-        TermsCondition: termscondition
+        AboutApp:aboutapp
       }
     });
 
-    if (!createterms) {
-      throw new ValidationError("terms and condition not created");
+    if (!createaboutapp) {
+      throw new ValidationError("about app not created");
     }
 
-    handlerOk(res, 201, createterms, "terms and condition created successfully");
+    handlerOk(res, 201, createaboutapp, "about app created successfully");
 
   } catch (error) {
     next(error)
@@ -293,17 +293,17 @@ const createAboutApp = async (req, res, next) => {
 const showAboutApp = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const findterms = await prisma.termsCondition.findFirst({
+    const findaboutapp = await prisma.AboutApp.findFirst({
       where: {
         createdById: id
       }
     });
 
-    if (!findterms) {
-      throw new NotFoundError("terms condtion not found");
+    if (!findaboutapp) {
+      throw new NotFoundError("about app not found");
     }
 
-    handlerOk(res, 200, findterms, 'terms condtion found successfully')
+    handlerOk(res, 200, findaboutapp, 'about app found successfully')
   } catch (error) {
     next(error)
   }
@@ -311,34 +311,34 @@ const showAboutApp = async (req, res, next) => {
 
 const updateAboutApp = async (req, res, next) => {
   try {
-    const { termsId } = req.params;
+    const { aboutAppId } = req.params;
 
-    const { termscondition } = req.body;
+    const { aboutapp } = req.body;
 
-    const findterms = await prisma.termsCondition.findFirst({
+    const findaboutapp = await prisma.AboutApp.findFirst({
       where: {
-        id: termsId
+        id: aboutAppId
       }
     });
 
-    if (!findterms) {
-      throw new NotFoundError("terms condition not found");
+    if (!findaboutapp) {
+      throw new NotFoundError("about app not found");
     }
 
-    const updateterms = await prisma.termsCondition.update({
+    const updateaboutapp = await prisma.AboutApp.update({
       where: {
-        id: findterms.id
+        id: findaboutapp.id
       },
       data: {
-        TermsCondition: termscondition
+        AboutApp: aboutapp
       }
     });
 
-    if (!updateterms) {
-      throw new ValidationError("terms condition not update");
+    if (!updateaboutapp) {
+      throw new ValidationError("about app not update");
     }
 
-    handlerOk(res, 200, updateterms, "terms condition updated successfully");
+    handlerOk(res, 200, updateaboutapp, "about app updated successfully");
   } catch (error) {
     next(error)
   }
@@ -346,7 +346,19 @@ const updateAboutApp = async (req, res, next) => {
 
 const showAllUsersFeedBack=async (req,res,next) => {
     try {
-        
+        const finduserfeedback=await prisma.feedBack.findMany(
+          {
+            include:{
+              createdBy:true
+            }
+          }
+        );
+
+        if(finduserfeedback.length===0){
+          throw new NotFoundError("user feed back not found")
+        }
+
+        handlerOk(res,200,finduserfeedback,"user feed back found successfully")
     } catch (error) {
         next(error)
     }
