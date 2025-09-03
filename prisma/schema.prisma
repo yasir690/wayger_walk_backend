@@ -30,6 +30,14 @@ enum deviceType {
   IOS
 }
 
+enum gameType {
+  TOURNAMENT
+  ONEONONE
+}
+
+
+
+
 model Admin {
   id             String      @id @default(uuid())
   email          String   @unique
@@ -53,14 +61,14 @@ model User {
   email                  String   @unique
   password               String?
   phoneNumber            String?  @unique
-  userName              String?
-  height   String?
-  weight   String?
-  address  String? 
-country                String?
+  userName               String?
+  height                 String?
+  weight                 String?
+  address                String? 
+  country                String?
   states                 String?
   city                   String?
-    gender                 String?
+  gender                 String?
   deviceType             deviceType?
   deviceToken            String?
   isCreatedProfile       Boolean  @default(false)
@@ -70,12 +78,14 @@ country                String?
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
 
-  Wallet Wallet[]
+  Wallet                 Wallet[]
+  Notification           Notification[]
+  FeedBack               FeedBack[]
 
-  Notification Notification[]
-
-  FeedBack FeedBack[]
+  createdGames           Game[]   @relation("UserCreatedGames") // games user created
+  joinedGames            Game[]   @relation("GamePlayers")      // games user joined
 }
+
 
 
 model Otp {
@@ -157,4 +167,27 @@ model FeedBack {
   createdBy          User               @relation(fields: [createdById], references: [id])
   createdAt          DateTime            @default(now())
   updatedAt          DateTime?           @updatedAt
+}
+
+model Game {
+  id               String    @id @default(uuid())
+  gameType         gameType?
+  gamePrice        Float
+  startDate        DateTime
+  endDate          DateTime
+  startTime        String
+  endTime          String
+  image            String
+  gameTitle        String
+  gameCode         String
+  gameDescription  String
+  gameDuration     String
+  totalPlayers     User[]    @relation("GamePlayers") // players joining the game
+  totalSteps       Int?
+
+  createdById      String
+  createdBy        User      @relation("UserCreatedGames", fields: [createdById], references: [id]) // game creator
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
 }

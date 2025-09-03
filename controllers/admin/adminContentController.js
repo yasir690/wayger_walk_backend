@@ -262,7 +262,7 @@ const createAboutApp = async (req, res, next) => {
     const { id } = req.user;
     const { aboutapp } = req.body;
 
-    const findaboutapp = await prisma.AboutApp.findFirst({
+    const findaboutapp = await prisma.aboutApp.findFirst({
       where: {
         createdById: id
       }
@@ -272,7 +272,7 @@ const createAboutApp = async (req, res, next) => {
       throw new ConflictError("about app create once only");
     }
 
-    const createaboutapp = await prisma.AboutApp.create({
+    const createaboutapp = await prisma.aboutApp.create({
       data: {
         createdById: id,
         AboutApp:aboutapp
@@ -293,7 +293,7 @@ const createAboutApp = async (req, res, next) => {
 const showAboutApp = async (req, res, next) => {
   try {
     const { id } = req.user;
-    const findaboutapp = await prisma.AboutApp.findFirst({
+    const findaboutapp = await prisma.aboutApp.findFirst({
       where: {
         createdById: id
       }
@@ -315,7 +315,7 @@ const updateAboutApp = async (req, res, next) => {
 
     const { aboutapp } = req.body;
 
-    const findaboutapp = await prisma.AboutApp.findFirst({
+    const findaboutapp = await prisma.aboutApp.findFirst({
       where: {
         id: aboutAppId
       }
@@ -325,7 +325,7 @@ const updateAboutApp = async (req, res, next) => {
       throw new NotFoundError("about app not found");
     }
 
-    const updateaboutapp = await prisma.AboutApp.update({
+    const updateaboutapp = await prisma.aboutApp.update({
       where: {
         id: findaboutapp.id
       },

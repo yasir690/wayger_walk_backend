@@ -133,7 +133,7 @@ const userVerifyOtp = async (req, res, next) => {
     }
 
     if (findotp.otpReason === "REGISTER") {
-      const hashedPassword = await hashPassword(userPassword);
+      // const hashedPassword = await hashPassword(userPassword);
 
       if (findotp.otpUsed) {
         throw new ConflictError("OTP already used");
@@ -143,7 +143,7 @@ const userVerifyOtp = async (req, res, next) => {
       const saveuser = await prisma.user.create({
         data: {
           email: userEmail,
-          password: hashedPassword,
+          // password: hashedPassword,
           userName: userName,
           deviceToken: userDeviceToken,
           deviceType: userDeviceType,

@@ -15,14 +15,14 @@ const userVerifyOtpSchema = Joi.object({
   body: Joi.object({
     userEmail: Joi.string().required(),
     otp: Joi.string().required(),
-    userPassword: Joi.string()
-      .min(8)
-      .max(30)
-      .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d@$!%*?&]{8,}$'))
-      .optional()
-      .messages({
-        'string.pattern.base': 'Password must include uppercase, lowercase, and a number.',
-      }),
+    // userPassword: Joi.string()
+    //   .min(8)
+    //   .max(30)
+    //   .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d@$!%*?&]{8,}$'))
+    //   .optional()
+    //   .messages({
+    //     'string.pattern.base': 'Password must include uppercase, lowercase, and a number.',
+    //   }),
     userName: Joi.string().optional(),
     userDeviceType: Joi.valid("ANDROID", "IOS").optional(),
     userDeviceToken: Joi.string().optional(),
